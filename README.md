@@ -1,90 +1,90 @@
-# Delivcrous Backend
+# Delivecrous Front
 
-Delivcrous est une application de livraison qui permet aux utilisateurs de commander des plats depuis différents restaurants.
+## Architecture du Projet
 
-## Structure du Projet
+L'application Delivecrous est développée en utilisant React Native, une bibliothèque JavaScript pour créer des applications mobiles multiplateformes. Voici l'architecture clé du projet :
 
-La structure du projet est organisée comme suit :
+- **src** : Le répertoire source principal contenant tous les fichiers source de l'application.
+- **assets** : Les fichiers statiques, tels que les images et les polices.
+- **components** : Les composants réutilisables de l'application.
+- **pages** : Les écrans de l'application, chacun dans son propre fichier.
+- **navigation** : La configuration de la navigation entre les écrans.
+- **node_modules** : Les dépendances du projet.
+- **App.js** : Le composant racine de l'application.
 
-- `src/main/java/com/example/delivcrous` : Contient le code source principal du projet.
-    - `controller` : Contient les contrôleurs pour gérer les requêtes HTTP.
-    - `model` : Contient les modèles de données utilisés dans l'application.
-    - `repository` : Contient les interfaces de répository pour interagir avec la base de données.
-    - `service` : Contient les services pour la logique métier.
-    - `security` : Contient les configurations et utilitaires pour la sécurité et l'authentification.
-    - `exceptions` : Contient les classes d'exception personnalisées.
-    - `payload` : Contient les classes de requête et de réponse.
-- `src/main/resources` : Contient les fichiers de ressources comme `application.properties`.
-- `src/test` : Contient les tests unitaires et d'intégration (pas eu le temps des les faire)
+## Configuration
 
-## Installation et Exécution
-
-1. Assurez-vous que Maven et Java sont installés sur votre machine.
-2. Clonez ce dépôt dans votre machine locale.
-3. Naviguez vers le répertoire du projet et exécutez la commande suivante pour construire le projet :
-```bash
-mvn clean install
+L'application utilise un fichier de configuration nommé `config.json` pour personnaliser les paramètres. Assurez-vous de configurer le fichier `config.json` pour spécifier l'adresse IPv4 de votre serveur ou de votre machine. Voici un exemple de contenu pour `config.json` :
+```json
+{
+  "IPv4": "192.168.0.100" 
+}
 ```
 
-Vous pouvez ensuite démarrer l'application java avec votre IDE. 
 
-## API Endpoints
 
-L'application fournit plusieurs endpoints API pour interagir avec le système. Voici quelques exemples d'endpoints :
+## Exécution
 
-    POST /api/utilisateurs/register : Permet de créer un nouvel utilisateur.
-    POST /api/utilisateurs/login : Permet à un utilisateur de se connecter.
-    GET /api/plats/getplats : Renvoie la liste des plats disponibles.
-    GET /api/panier/getpanier : Renvoie le panier de l'utilisateur connecté
-    POST /api/panier/postpanier : Enregistre le panier de l'utilisateur connecté
-    POST /api/commandes/createcommande : Permet de créer une nouvelle commande pour l'utilisateur connecté.
-    GET /api/commandes/getcommandes : Renvoie la liste de toutes les commandes de l'utilisateur connecté.
+Après avoir configuré le fichier `config.json`, vous pouvez lancer l'application en utilisant la commande suivante :
 
-## Exemple de requêtes avec curl 
-Requete pour enregistrer un nouvel utilisateur :
-```bash
-curl -X POST "http://localhost:8080/api/utilisateurs/register"      -H "Content-Type: application/json"      -d '{
-           "username": "clementrafafr",
-           "email": "clementrafa@gmail.fr",
-           "password": "Password123@",
-           "tel": "0611432242",
-           "adresse": "123 Main St",
-           "nom": "Clement",
-           "prenom": "Rafa",
-           "solde_crous": 100.0
-         }'
-
+```shell
+npm start
 ```
-réponse :
-```bash
-{"headers":{},"body":{"message":"User registered successfully!"},"statusCode":"OK","statusCodeValue":200}
+Assurez-vous d'avoir installé l'application Expo Go sur votre téléphone. Après avoir scanné le QR code généré par votre IDE, vous aurez accès à l'application et pourrez commencer à l'utiliser.
+
+Assurez-vous également d'avoir installé toutes les dépendances requises en utilisant npm install avant de lancer l'application.
+
+```shell
+npm install
 ```
+## Structure
 
-Requête pour se connecter et récupération du token jwt sous forme de cookie :
+-**Carte (Home) :**
+Cette page d'accueil affiche une liste de plats disponibles à la commande.
+Les utilisateurs peuvent filtrer les plats par catégorie (par exemple, entrées, plats principaux, desserts).
+Les utilisateurs peuvent parcourir les plats et ajouter des articles à leur panier.
+Il y a un bouton de connexion dans le coin supérieur droit, qui redirige les utilisateurs vers la page de connexion s'ils ne sont pas déjà connectés.
 
-```bash
-curl -X POST "http://localhost:8080/api/utilisateurs/login" -H "Content-Type: application/json" -d '{"username":"jdoe", "password":"Password123!"}'
-```
-réponse :
-```bash
-{"headers":{"Set-Cookie":["delivcrous=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqZG9lIiwidXNlcklkIjoxLCJpYXQiOjE2OTc4NjMwNzgsImV4cCI6MTY5Nzk0OTQ3OH0.O9Qix3gv_A0gm1yMzRtWehnL83Zse2twt6ywBq7g9Ss; Path=/api; Max-Age=86400; Expires=Sun, 22 Oct 2023 04:37:58 GMT; HttpOnly"]},"body":{"solde_crous":100.0,"id":1,"username":"jdoe","email":"jdoe@gmail.com","tel":"0102030405","adresse":"123 Rue ABC"},"statusCode":"OK","statusCodeValue":200}
-```
+-**Menu :**
+Cette page affiche un menu de navigation latérale pour les utilisateurs connectés.
+Lorsqu'un utilisateur est connecté, il voit un message de bienvenue avec son nom d'utilisateur.
+Les options du menu incluent "Mon Profil" pour voir et éditer le profil de l'utilisateur, "Mes Commandes" pour voir l'historique des commandes de l'utilisateur, et "Se Déconnecter" pour se déconnecter de son compte.
 
-Utilisation du cookie du user_id 2 pour récupérer ses commandes :
-```bash
-curl -X GET "http://localhost:8080/api/commandes/getcommande?user_id=2" -b "delivcrous=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhc21pdGgiLCJ1c2VySWQiOjIsImlhdCI6MTY5Nzg2Mzk5OSwiZXhwIjoxNjk3OTUwMzk5fQ.PihL5FuWZc-UQ-isiKzZmHgmA7CGRTMdZVzoD9REejg"
-```
-réponse :
-```bash
-[{"commande_id":2,"utilisateur":{"user_id":2,"username":"asmith","email":"asmith@gmail.com","password":"$2a$10$y.AsJMBi.8L5B3UX.hjieuPTiQukZ8hMXvZsobHlxb04f111ws.3q","nom":"Alice","prenom":"Smith","solde_crous":150.0,"tel":"0607080910","panier":{"panier_id":2,"plats":[{"id":3,"title":"Burger","description":"Délicieux burger au bon goût de cheddar","prix":18,"image":"https://drive.google.com/uc?export=view&id=1Lz5dp7L0k6x03HVQ8kWeVDs8qK0upmtW","category":"Burger","allergenes":"pomme de terre, oeuf"}]},"adresse":"456 Rue DEF"},"plats":[{"id":2,"title":"Raviolis","description":"Pâtes farcies à la ricotta","prix":15,"image":"https://drive.google.com/uc?export=view&id=1bBh85SKNHP_ST5mjf1kCxvqyUHCOsbSW","category":"Pâtes","allergenes":"gluten, fromage"}],"adresse_livraison":"456 Rue DEF","status":"En préparation","date_commande":"2023-08-29T22:00:00.000+00:00"}]
-```
+-**Panier :**
+Cette page récapitule les articles que l'utilisateur a ajoutés à son panier.
+Les utilisateurs peuvent ajuster la quantité des articles, les supprimer du panier et passer à la page de confirmation de commande.
+Le montant total de la commande est affiché.
 
-La logique est la même pour les autres requêtes.
+-**DataDetails :**
+Cette page affiche les détails d'un plat spécifique, y compris une image, le nom, la description, les allergènes et le prix.
+Les utilisateurs peuvent ajouter cet article à leur panier ou ajuster la quantité s'il est déjà dans le panier.
 
-## Diagramme de séquence 
+-**PageLogin :**
+Cette page permet aux utilisateurs de se connecter à leur compte.
+Les utilisateurs doivent saisir leur adresse e-mail et leur mot de passe pour se connecter.
+Il y a également un lien pour créer un nouveau compte.
 
-![Diagramme](https://showme.redstarplugin.com/d/d:lcJ70blj)
+-**PageCreationCompte :**
+Cette page permet aux nouveaux utilisateurs de créer un compte.
+Les utilisateurs doivent saisir leur nom, leur adresse e-mail, leur mot de passe, etc.
 
-### important
+-**PageConfirmation :**
+Cette page s'affiche après que l'utilisateur ait confirmé sa commande.
+Elle affiche un message de confirmation et récapitule les articles commandés, y compris leur quantité et leur prix.
+Il y a un bouton pour revenir à la page d'accueil ou à d'autres sections de l'application.
 
-Le projet a été fait sous intelliJ, il se peut qu'il y ait des problèmes d'importation sur un autre IDE
+-**MonCompte :**
+Cette page affiche les informations du compte de l'utilisateur.
+Les informations telles que le nom d'utilisateur, l'adresse e-mail et le solde du compte sont affichées.
+Cela permet aux utilisateurs de consulter leur profil.
+
+-**CommandesPage :**
+Cette page affiche la liste des commandes passées par l'utilisateur.
+Les informations sur chaque commande, telles que le numéro de commande, l'adresse de livraison, le statut et la date de commande, sont répertoriées.
+Les détails des plats commandés sont également affichés pour chaque commande.
+
+Réalisé par :
+Oglialoro Ugo
+Rafa Clément
+Jardez Florian
+IKharrazen Ilyas

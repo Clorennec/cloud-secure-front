@@ -12,7 +12,7 @@ const CommandesPage = () => {
             try {
                 const userToken = await AsyncStorage.getItem('jwtToken');
                 const userId = await AsyncStorage.getItem('userId');
-                const response = await axios.get(`http://`+config.Ipv4+`:8080/api/commandes/getcommande?user_id=${userId}`, {
+                const response = await axios.get(`http://`+config.Ipv4+`:8888/api/commandes/getcommande?user_id=${userId}`, {
                     headers: {
                         Cookie: `delivcrous=${userToken}`,
                     },

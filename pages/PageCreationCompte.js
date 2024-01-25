@@ -53,7 +53,7 @@ const PageCreationCompte = ({ isconnected, setIsConnected }) => {
       };
 
       try {
-        const response = await axios.post('http://' +config.Ipv4+':8888/api/utilisateurs/register', userData);
+        const response = await axios.post('http://' +config.Ipv4+':8080/api/utilisateurs/register', userData);
 
         setshowConfirmationInscr(true);
       } catch (error) {

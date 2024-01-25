@@ -16,7 +16,7 @@ import categories from '../assets/data/categories';
 import AddRemoveButtons from '../components/AddRemovebuttons';
 
 const config = require('../config.json');
-const backendUrlPlat = "http://" + config.Ipv4 + ":8888/api/plats/getplats";
+const backendUrlPlat = "http://" + config.Ipv4 + ":8080/api/plats/getplats";
 
 
 const colors = {
